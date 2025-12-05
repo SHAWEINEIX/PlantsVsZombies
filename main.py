@@ -1,13 +1,22 @@
 from data.src.PVZ import *  # 导入游戏类
 from data.src.GameSet import *  # 导入游戏设置窗口类
+from data.src.versionLogWindow import VersionLogWindow  # 导入版本更新日志窗口类
 import threading # 导入多线程
 
 class Main: # 主函数
     def __init__(self):
+        # 显示版本更新日志窗口
+        self.show_version_log_window()
+        
         self.game = Pvz() # 创建游戏实例
         self.GameSetWindow = GameSet(self.game) # 创建游戏设置窗口
         self.RunGame = threading.Thread(target = self.CreateGameInstance) # 创建多线程:游戏运行窗口
         self.RunGameSetWindow = threading.Thread(target = self.CreateGameSet) # 创建多线程:游戏设置窗口
+    
+    def show_version_log_window(self):
+        """显示版本更新日志窗口"""
+        version_window = VersionLogWindow()
+        version_window.show()
     
     def run(self):
         self.RunGame.start() # 启动游戏

@@ -19,7 +19,7 @@ class Pvz:
     def start(self, game, GameSetWindow): # 游戏开始界面
         pygame.init()  # 初始化pygame
         self.screen = pygame.display.set_mode(GAME_SIZE)  # 设置游戏窗口
-        pygame.display.set_caption(GAME_TITLE)  # 设置游戏窗口标题
+        pygame.display.set_caption(GAME_TITLE + "V" + GAME_VERSION)  # 设置游戏窗口标题
         self.FPS = DEFAULT_FPS  # 设置游戏帧率
         self.clock = pygame.time.Clock()  # 设置时钟
         self.game = Game(game)  # 创建游戏处理核心实例
