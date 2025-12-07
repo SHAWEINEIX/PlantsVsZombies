@@ -439,17 +439,31 @@ class VersionLogWindow:
             content = response.text
             lines = content.split('\n')
             portable_links = []
+            setup_links = []
             
             for line in lines:
                 line = line.strip()
                 if line and "-Portable:" in line:
-                    # 提取链接（格式：V2.4.7-Portable:https://...）
+                    # 提取便携版链接（格式：V2.4.7-Portable:https://...）
                     link_start = line.find(":http") + 1  # 找到":http"并移到http开始位置
                     if link_start != 0:
                         portable_links.append(line[link_start:])
+                elif line and "-Setup:" in line:
+                    # 提取安装版链接（格式：V2.4.7-Setup:https://...）
+                    link_start = line.find(":http") + 1  # 找到":http"并移到http开始位置
+                    if link_start != 0:
+                        setup_links.append(line[link_start:])
             
-            if not portable_links:
-                self.download_window.after(0, lambda: self._update_status("未找到便携版下载链接", error=True))
+            if portable_links:
+                # 使用第一个便携版链接作为最新版本
+                latest_download_url = portable_links[0]
+                self.download_window.after(0, lambda: self._update_status("找到便携版下载链接"))
+            elif setup_links:
+                # 如果没有便携版，使用第一个安装版链接
+                latest_download_url = setup_links[0]
+                self.download_window.after(0, lambda: self._update_status("未找到便携版下载链接，将使用安装版链接"))
+            else:
+                self.download_window.after(0, lambda: self._update_status("未找到任何版本的下载链接", error=True))
                 time.sleep(2)
                 self.download_window.after(0, self.download_window.destroy)
                 return
