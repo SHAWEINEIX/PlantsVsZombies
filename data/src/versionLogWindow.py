@@ -271,7 +271,7 @@ class VersionLogWindow:
         image_container.pack_propagate(False)
         
         # 赞赏码图片
-        reward_image_path = "data/image/Other/reward.png"
+        reward_image_path = "./data/image/Other/reward.png"
         if os.path.exists(reward_image_path):
             try:
                 image = Image.open(reward_image_path)
