@@ -48,7 +48,7 @@ settings = {
             "chomper": (4, -8),     # 食人花在网格中的位置偏移
             "cherry_bomb" : (0, 0),   # 樱桃炸弹在网格中的位置偏移
             "jalapeno" : (10, 0),      # 火爆辣椒在网格中的位置偏移
-            "squash" : (-3, -105),        # 倭瓜在网格中的位置偏移
+            "squash" : (-2, -100),        # 倭瓜在网格中的位置偏移
         },
         # 鼠标拖动植物时的位置偏移量
         "mousePlantPos":{
@@ -70,7 +70,7 @@ settings = {
             "chomper": 0.1,      # 食人花动画帧切换时间间隔
             "cherry_bomb": 0.1,   # 樱桃炸弹动画帧切换时间间隔
             "jalapeno": 0.1,      # 火爆辣椒动画帧切换时间间隔
-            "squash": 0.08,        # 倭瓜动画帧切换时间间隔
+            "squash": 0.09,        # 倭瓜动画帧切换时间间隔
         },
         # 植物碰撞检测的 X 轴偏移量
         "detectionPlantXPos": {
@@ -82,7 +82,7 @@ settings = {
             "chomper": 0,         # 食人花碰撞检测 X 轴偏移量
             "cherry_bomb": 0,     # 樱桃炸弹碰撞检测 X 轴偏移量
             "jalapeno": 0,         # 火爆辣椒碰撞检测 X 轴偏移量
-            "squash": 0,           # 倭瓜碰撞检测 X 轴偏移量
+            "squash": -70,           # 倭瓜碰撞检测 X 轴偏移量
         },
         # 游戏中会出现的僵尸类型集合
         "zombieType": {
@@ -236,9 +236,11 @@ settings = {
         "size": (80, 180),  # 倭瓜显示尺寸
         "path": "./data/image/Plant/Squash/Squash/(%d).png",  # 倭瓜正常状态图片路径
         "imageCount": 17,  # 倭瓜正常状态图片数量
-        "AttackPath": "./data/image/Plant/Squash/SquashAttack/(%d).png",  # 倭瓜攻击状态图片路径
-        "AImageCount": 4,  # 倭瓜攻击状态图片数量
+        "attackPath": "./data/image/Plant/Squash/SquashAttack/(%d).png",  # 倭瓜攻击状态图片路径
+        "attackImageCount": 4,  # 倭瓜攻击状态图片数量
         "collisionSize": (80, 100),  # 倭瓜实际碰撞盒尺寸（扣除透明区域）
+        "deleteTime": 60,  # 倭瓜删除时间
+        "jumpXchange": 10,  # 倭瓜跳跃时X轴偏移量
     },
     # 普通僵尸相关属性设置
     "common_zombie": {

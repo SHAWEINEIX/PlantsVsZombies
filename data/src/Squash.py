@@ -9,11 +9,29 @@ class Squash(Object):
         self.pos[0] += settings["game"]["gridPlantPos"][self.plantType][0]
         self.pos[1] += settings["game"]["gridPlantPos"][self.plantType][1]
         self.updateGrid(self.pos)
+        self.grid[0] += 1
+        self.grid[1] += 2
         self.state = "Idle"
         self.delete = 0
+        self.Todelete = 0
+        self.attackPosX = None
+        self.attackZombie = None
+        self.TodeleteTime = 0
     
     def run(self):
-        self.update()
+        if not self.Todelete and not self.delete:
+            self.update()
+        if self.Todelete:
+            self.TodeleteTime += 1
+            if self.TodeleteTime >= settings[self.plantType]["deleteTime"]:
+                self.delete = 1
+        if self.attackPosX != None:
+            if self.pos[0] < self.attackPosX:
+                self.pos[0] += 1
+            elif self.pos[0] > self.attackPosX:
+                self.pos[0] -= 1
         if self.state == "Attack" and self.imageIndex == self.imageCount:
-            self.delete = 1
+            self.Todelete = 1
+        if self.state == "Attack" and self.imageIndex == self.imageCount - 1:
+            self.game.game.AttackZombie(self.attackZombie)
         self.draw()

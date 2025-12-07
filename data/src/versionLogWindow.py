@@ -312,7 +312,7 @@ class VersionLogWindow:
         left_tip_frame.pack(side=LEFT, fill=X, expand=True)
         
         if not self.is_latest_version():
-            update_tip = Label(left_tip_frame, text="🔔 发现新版本！建议前往官网下载最新版本", 
+            update_tip = Label(left_tip_frame, text="🔔发现新版本！建议点击下载按钮下载最新版本", 
                              font=("Microsoft YaHei", 11, "bold"), fg=self.accent_color)
             update_tip.pack(anchor=W)
         
@@ -431,7 +431,7 @@ class VersionLogWindow:
         try:
             # 获取下载链接文件
             self.download_window.after(0, lambda: self._update_status("正在获取最新下载链接..."))
-            downloads_url = "https://gitee.com/zzj-jack/pvz-site/raw/main/downloads.txt"
+            downloads_url = "https://raw.gitcode.com/ZZJ-JACK/Pvz/raw/master/data/downloads.txt"
             response = requests.get(downloads_url, timeout=10)
             response.raise_for_status()
             
@@ -442,10 +442,10 @@ class VersionLogWindow:
             
             for line in lines:
                 line = line.strip()
-                if line and "便携版" in line and "http" in line:
-                    # 提取链接
-                    link_start = line.find("http")
-                    if link_start != -1:
+                if line and "-Portable:" in line:
+                    # 提取链接（格式：V2.4.7-Portable:https://...）
+                    link_start = line.find(":http") + 1  # 找到":http"并移到http开始位置
+                    if link_start != 0:
                         portable_links.append(line[link_start:])
             
             if not portable_links:
@@ -485,7 +485,7 @@ class VersionLogWindow:
                             self.download_window.after(0, lambda p=progress_percent: self._update_progress(p))
             
             # 下载完成
-            self.download_window.after(0, lambda: self._update_status(f"下载完成！文件已保存至: {save_path}"))
+            self.download_window.after(0, lambda: self._update_status(f"下载完成！文件已保存至同目录下: {file_name}"))
             
             # 2秒后关闭窗口
             time.sleep(2)

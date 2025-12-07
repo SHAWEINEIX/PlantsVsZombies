@@ -184,13 +184,10 @@ class Pvz:
                 for nut in self.nut_list: # 遍历坚果列表
                     nut.run() # 运行坚果
                 
-                for squash in self.squash_list:  # 遍历倭瓜列表
-                    squash.run()  # 运行倭瓜
-                
-                for zombie in self.zombie_list:  # 遍历普通僵尸列表
+                for zombie in self.zombie_list:  # 遍历僵尸列表
                     zombie.run()  # 运行僵尸
                     if zombie.delete:  # 如果僵尸需要被删除
-                        self.zombie_list.remove(zombie)  # 从普通僵尸列表中删除僵尸
+                        self.zombie_list.remove(zombie)  # 从僵尸列表中删除僵尸
 
                 for head in self.zombieHead_list:  # 遍历僵尸头列表
                     head.run()  # 运行僵尸头
@@ -199,6 +196,9 @@ class Pvz:
 
                 for chomper in self.chomper_list:  # 遍历大嘴花列表
                     chomper.run()  # 运行大嘴花
+                    
+                for squash in self.squash_list:  # 遍历倭瓜列表
+                    squash.run()  # 运行倭瓜
                 
                 for pea in self.pea_list:  # 遍历子弹列表
                     pea.run()  # 运行子弹

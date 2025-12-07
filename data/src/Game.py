@@ -321,19 +321,7 @@ class Game:
                         zombie.head = False
                     # 如果僵尸生命值小于等于 0，更新僵尸状态
                     if zombie.hp <= 0:
-                        zombie.hp = 0
-                        zombie.imageIndex = 0
-                        zombie.path = settings[zombie.type]["headlessPath"]
-                        zombie.imageCount = settings[zombie.type]["headlessImageCount"]
-                        flag = False
-                        # 检查该僵尸所在行是否还有其他僵尸
-                        for Zombie in self.game.zombie_list:
-                            if zombie.posY == Zombie.posY:
-                                flag = True
-                                break
-                        # 如果该行没有其他僵尸，更新该行僵尸存在标志
-                        if not flag:
-                            self.game.zombiePos[zombie.posY] = False
+                        self.AttackZombie(zombie, 0)
         
         # 处理豌豆射手与僵尸的碰撞
         for zombie in self.game.zombie_list:
@@ -477,22 +465,7 @@ class Game:
                             # 移除土豆地雷
                             self.map[potatoMine.grid[1]][potatoMine.grid[0]] = 0
                         if not zombie.path == settings[zombie.type]["deadPath"]:
-                            if zombie.hp > 40:
-                                # 添加僵尸头对象
-                                self.game.zombieHead_list.append(ZombieHead(self.screen, (zombie.pos[0] + 30, zombie.pos[1])))
-                            zombie.hp = 0
-                            zombie.imageIndex = 0
-                            zombie.path = settings[zombie.type]["deadPath"]
-                            zombie.imageCount = settings[zombie.type]["deadImageCount"]
-                            flag = False
-                            # 检查该僵尸所在行是否还有其他僵尸
-                            for Zombie in self.game.zombie_list:
-                                if zombie.posY == Zombie.posY:
-                                    flag = True
-                                    break
-                            # 如果该行没有其他僵尸，更新该行僵尸存在标志
-                            if not flag:
-                                self.game.zombiePos[zombie.posY] = False
+                            self.AttackZombie(zombie)
         
         for lawnmower in self.game.lawnmower_list:
             for zombie in self.game.zombie_list:
@@ -501,22 +474,7 @@ class Game:
                     if not zombie.path == settings[zombie.type]["deadPath"]:
                         if not lawnmower.GoOut:
                             lawnmower.GoOut = 1
-                        if zombie.hp > 40:
-                            # 添加僵尸头对象
-                            self.game.zombieHead_list.append(ZombieHead(self.screen, (zombie.pos[0] + 30, zombie.pos[1])))
-                        zombie.hp = 0
-                        zombie.imageIndex = 0
-                        zombie.path = settings[zombie.type]["deadPath"]
-                        zombie.imageCount = settings[zombie.type]["deadImageCount"]
-                        flag = False
-                        # 检查该僵尸所在行是否还有其他僵尸
-                        for Zombie in self.game.zombie_list:
-                            if zombie.posY == Zombie.posY:
-                                flag = True
-                                break
-                        # 如果该行没有其他僵尸，更新该行僵尸存在标志
-                        if not flag:
-                            self.game.zombiePos[zombie.posY] = False
+                        self.AttackZombie(zombie)
         
         for squash in self.game.squash_list:
             for zombie in self.game.zombie_list:
@@ -526,26 +484,12 @@ class Game:
                         if not squash.state == "Attack": # 如果倭瓜未处于攻击状态
                             squash.state = "Attack" # 切换为攻击状态
                             squash.imageIndex = 1
+                            squash.path = settings["squash"]["attackPath"]
                             squash.imageCount = settings["squash"]["attackImageCount"]
                             squash.updateImage()
+                            squash.attackPosX = zombie.pos[0] + settings["squash"]["jumpXchange"]
                             squash.imageIndex = 0
-
-                        if zombie.hp > 40:
-                            # 添加僵尸头对象
-                            self.game.zombieHead_list.append(ZombieHead(self.screen, (zombie.pos[0] + 30, zombie.pos[1])))
-                        zombie.hp = 0
-                        zombie.imageIndex = 0
-                        zombie.path = settings[zombie.type]["deadPath"]
-                        zombie.imageCount = settings[zombie.type]["deadImageCount"]
-                        flag = False
-                        # 检查该僵尸所在行是否还有其他僵尸
-                        for Zombie in self.game.zombie_list:
-                            if zombie.posY == Zombie.posY:
-                                flag = True
-                                break
-                        # 如果该行没有其他僵尸，更新该行僵尸存在标志
-                        if not flag:
-                            self.game.zombiePos[zombie.posY] = False
+                            squash.attackZombie = zombie
 
         for zombie in self.game.zombie_list:
             if zombie.pos[0] <= GRID_LEFT_X and not self.game.lawnmowerIf[zombie.posY] and not zombie.hp == 0:
@@ -554,6 +498,7 @@ class Game:
         # 处理倭瓜删除事件
         for squash in self.game.squash_list:
             if squash.delete:
+                self.map[squash.grid[1]][squash.grid[0]] = 0
                 self.game.squash_list.remove(squash)
         
         # 处理草地机删除事件
@@ -594,3 +539,21 @@ class Game:
         for growSoil in self.game.growSoil_list:
             if growSoil.delete:
                 self.game.growSoil_list.remove(growSoil)
+    
+    def AttackZombie(self, zombie, head = 1):
+        if head and zombie.hp > 40:
+            # 添加僵尸头对象
+            self.game.zombieHead_list.append(ZombieHead(self.screen, (zombie.pos[0] + 30, zombie.pos[1])))
+        zombie.hp = 0
+        zombie.imageIndex = 0
+        zombie.path = settings[zombie.type]["deadPath"]
+        zombie.imageCount = settings[zombie.type]["deadImageCount"]
+        flag = False
+        # 检查该僵尸所在行是否还有其他僵尸
+        for Zombie in self.game.zombie_list:
+            if zombie.posY == Zombie.posY:
+                flag = True
+                break
+        # 如果该行没有其他僵尸，更新该行僵尸存在标志
+        if not flag:
+            self.game.zombiePos[zombie.posY] = False
