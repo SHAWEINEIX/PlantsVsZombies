@@ -325,11 +325,6 @@ class Game:
         
         # 处理豌豆射手与僵尸的碰撞
         for zombie in self.game.zombie_list:
-            # 如果僵尸生命值小于等于 40，停止啃食并跳过本次循环
-            if zombie.hp <= 40:
-                if zombie.eat:
-                    zombie.eat = False
-                continue
             for peashooter in self.game.peashooter_list:
                 # 检测豌豆射手与僵尸是否发生碰撞
                 if collision_Plant_and_Zombie_detection(peashooter, zombie, "peashooter"):
@@ -352,11 +347,6 @@ class Game:
 
         # 处理坚果与僵尸的碰撞
         for zombie in self.game.zombie_list:
-            # 如果僵尸生命值小于等于 40，停止啃食并跳过本次循环
-            if zombie.hp <= 40:
-                if zombie.eat:
-                    zombie.eat = False
-                continue
             for nut in self.game.nut_list:
                 # 检测坚果与僵尸是否发生碰撞
                 if collision_Plant_and_Zombie_detection(nut, zombie, "nut"):
@@ -388,11 +378,6 @@ class Game:
         
         # 处理向日葵与僵尸的碰撞
         for zombie in self.game.zombie_list:
-            # 如果僵尸生命值小于等于 40，停止啃食并跳过本次循环
-            if zombie.hp <= 40:
-                if zombie.eat:
-                    zombie.eat = False
-                continue
             for sunflower in self.game.sunflower_list:
                 # 检测向日葵与僵尸是否发生碰撞
                 if collision_Plant_and_Zombie_detection(sunflower, zombie, "sunflower"):
@@ -425,11 +410,6 @@ class Game:
         
         # 处理食人花与僵尸的碰撞(僵尸咬食人花)
         for zombie in self.game.zombie_list:
-            # 如果僵尸生命值小于等于 40，停止啃食并跳过本次循环
-            if zombie.hp <= 40:
-                if zombie.eat:
-                    zombie.eat = False
-                continue
             for chomper in self.game.chomper_list:
                 # 如果食人花处于进食状态
                 if chomper.state == "Eating":  

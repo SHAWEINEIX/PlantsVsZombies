@@ -103,8 +103,8 @@ settings = {
             "buckethead_zombie": 10, # 对铁桶僵尸的攻击力
         },
         "zombie-burn": { # 僵尸燃烧状态相关设置
-            "Path": "./data/image/Zombie/Burn/Burn%d.svg",  # 僵尸燃烧状态图片路径
-            "ImageCount": 11,  # 僵尸燃烧状态图片数量
+            "Path": "./data/image/Zombie/Burn/BoomDie(%d).png",  # 僵尸燃烧状态图片路径
+            "ImageCount": 20,  # 僵尸燃烧状态图片数量
             "Size": (55, 60),  # 僵尸燃烧状态图片尺寸
             "Pos": (45, 40)   # 僵尸燃烧状态图片位置偏移
         },
@@ -252,6 +252,8 @@ settings = {
         "imageCount": 18,  # 普通僵尸闲置状态图片数量
         "eatPath": "./data/image/Zombie/Zombie/Eat (%d).png",  # 普通僵尸进食状态图片路径
         "eatImageCount": 21,  # 普通僵尸进食状态图片数量
+        "lostHeadAttackPath": "./data/image/Zombie/Zombie/LostHeadAttack(%d).png",  # 普通僵尸无头攻击状态图片路径
+        "lostHeadAttackImageCount": 11,  # 普通僵尸无头攻击状态图片数量
         "headlessPath": "./data/image/Zombie/Zombie/Headless (%d).png",  # 普通僵尸无头状态图片路径
         "headlessImageCount": 18,  # 普通僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 普通僵尸死亡状态图片路径
@@ -267,6 +269,8 @@ settings = {
         "imageCount": 21,  # 路障僵尸行走状态图片数量
         "eatPath": "./data/image/Zombie/ConeheadZombie/eat(%d).png",  # 路障僵尸进食状态图片路径
         "eatImageCount": 11,  # 路障僵尸进食状态图片数量
+        "lostHeadAttackPath": "./data/image/Zombie/Zombie/LostHeadAttack(%d).png",  # 普通僵尸无头攻击状态图片路径
+        "lostHeadAttackImageCount": 11,  # 普通僵尸无头攻击状态图片数量
         "headlessPath": "./data/image/Zombie/Zombie/Headless (%d).png",  # 路障僵尸无头状态图片路径
         "headlessImageCount": 18,  # 路障僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 路障僵尸死亡状态图片路径
@@ -282,6 +286,8 @@ settings = {
         "imageCount": 15,  # 铁桶僵尸行走状态图片数量
         "eatPath": "./data/image/Zombie/BucketheadZombie/eat(%d).png",  # 铁桶僵尸进食状态图片路径
         "eatImageCount": 11,  # 铁桶僵尸进食状态图片数量
+        "lostHeadAttackPath": "./data/image/Zombie/Zombie/LostHeadAttack(%d).png",  # 普通僵尸无头攻击状态图片路径
+        "lostHeadAttackImageCount": 11,  # 普通僵尸无头攻击状态图片数量
         "headlessPath": "./data/image/Zombie/Zombie/Headless (%d).png",  # 铁桶僵尸无头状态图片路径
         "headlessImageCount": 18,  # 铁桶僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 铁桶僵尸死亡状态图片路径

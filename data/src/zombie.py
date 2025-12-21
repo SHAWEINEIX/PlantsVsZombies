@@ -61,17 +61,38 @@ class Zombie(Object):  # 定义Zombie类，继承自object
         # 检查当前时间与上一次移动位置的时间间隔是否超过0.1秒，且僵尸生命值不为0
         if not time.time() - self.prePosTime <= 0.1 and self.hp != 0:  # 如果当前时间与上一次切换位置时间间隔不小于指定秒
             # 若僵尸正在吃植物且当前图片路径不是吃植物的图片路径
-            if self.eat and not self.path == settings[self.type]["eatPath"]:
-                # 将图片路径切换为吃植物的图片路径
-                self.path = settings[self.type]["eatPath"]
-                self.imageCount = settings[self.type]["eatImageCount"]
-                # 重置图片索引为0
-                self.imageIndex = 0
+            if self.eat and not self.path == settings[self.type]["eatPath"] and not self.path == settings[self.type]["lostHeadAttackPath"]:
+                if self.hp > 40: # 若僵尸生命值大于40:有头吃植物
+                    # 将图片路径切换为吃植物的图片路径
+                    self.path = settings[self.type]["eatPath"]
+                    self.imageCount = settings[self.type]["eatImageCount"]
+                    self.imageIndex = 1
+                    self.updateImage() # 更新图片
+                    # 重置图片索引为0
+                    self.imageIndex = 0
+                else: # 若僵尸生命值小于40:无头吃植物
+                    # 将图片路径切换为无头攻击的图片路径
+                    self.path = settings[self.type]["lostHeadAttackPath"]
+                    self.imageCount = settings[self.type]["lostHeadAttackImageCount"]
+                    self.imageIndex = 1
+                    self.updateImage() # 更新图片
+                    # 重置图片索引为0
+                    self.imageIndex = 0
             # 若僵尸不在吃植物且当前图片路径是吃植物的图片路径
             elif not self.eat and self.path == settings[self.type]["eatPath"]:
                 # 将图片路径切换为正常行走的图片路径
                 self.path = settings[self.type]["path"]
                 self.imageCount = settings[self.type]["imageCount"]
+                self.imageIndex = 1
+                self.updateImage() # 更新图片
+                # 重置图片索引为0
+                self.imageIndex = 0
+            elif not self.eat and self.path == settings[self.type]["lostHeadAttackPath"]:
+                # 将图片路径切换为正常行走的图片路径
+                self.path = settings[self.type]["headlessPath"]
+                self.imageCount = settings[self.type]["headlessImageCount"]
+                self.imageIndex = 1
+                self.updateImage() # 更新图片
                 # 重置图片索引为0
                 self.imageIndex = 0
             # 更新上一次移动位置的时间

@@ -9,7 +9,6 @@ class Nut(Object):  # 定义nut类，继承自Object类
         self.pos[0] += settings['game']['gridPlantPos'][self.plantType][0]
         self.pos[1] += settings['game']['gridPlantPos'][self.plantType][1]
         self.updateGrid(self.pos)
-        self.grid[1] += 1
 
     def run(self):  # 运行函数
         self.update()  # 更新图片
