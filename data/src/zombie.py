@@ -25,6 +25,7 @@ class Zombie(Object):  # 定义Zombie类，继承自object
         self.dieTime = 0  # 记录僵尸死亡后的持续时间，初始为0
         self.InRightVirtualGrid = 0  # 标记僵尸是否在右侧虚拟网格内，初始为False
         self.InGrid = False  # 标记僵尸是否在网格内，初始为False
+        self.SpikeweedEatTime = 0  # 记录地刺吃僵尸的时间，初始为0
         
     def run(self):  # 运行函数，用于更新僵尸的状态和绘制僵尸
         """

@@ -21,8 +21,9 @@ GRID_SIZE = (75, 85)  # 网格的大小
 GRID_X = []  # 网格的横坐标
 GRID_Y = []  # 网格的纵坐标
 RIGHT_VIRTUAL_GRID_X = GRID_LEFT_X + (GRID_COUNT[0] + 1) * GRID_SIZE[0]  # 右侧虚拟网格的横坐标
-CHOOSE_CARD_FRAME_CARD_COUNT = (8, 5)  # 选择卡片框的卡片行列数
 
+MAX_CHOOSE_CARD_NUMBER = 8  # 最大选择卡片数量
+CHOOSE_CARD_FRAME_CARD_COUNT = (8, 5)  # 选择卡片框的卡片行列数
 CHOOSE_CARD_FRAME_CARD_X = []  # 选择卡片框的卡片横坐标
 CHOOSE_CARD_FRAME_CARD_Y = []  # 选择卡片框的卡片纵坐标
 CHOOSE_CARD_FRAME_LEFT_X = 112  # 选择卡片框的左边横坐标

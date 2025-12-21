@@ -4,7 +4,7 @@ from data.src.const import *
 # 定义一个字典，用于存储游戏中各种元素的属性，后续游戏逻辑会依据这些属性运行
 settings = {
     # 植物名称列表，索引 0 位置为空字符串，后续索引对应不同植物名称
-    "plant_name": ["", "sunflower", "peashooter", "nut", "potato_mine", "chomper", "cherry_bomb", "jalapeno", "squash"],
+    "plant_name": ["", "sunflower", "peashooter", "nut", "potato_mine", "chomper", "cherry_bomb", "jalapeno", "squash", "spikeweed"],
     # 需要生长土壤的植物
     "need_grow_soil_plant": ["sunflower", "peashooter", "nut", "potato_mine", "chomper", "squash"],
     # 植物卡片图片路径列表，索引与 plant_name 列表对应，0 位置为空字符串
@@ -17,6 +17,7 @@ settings = {
                         "./data/image/PlantCard/CherryBomb.png",  # 樱桃炸弹卡片图片路径
                         "./data/image/PlantCard/Jalapeno.png",  # 火爆辣椒卡片图片路径
                         "./data/image/PlantCard/Squash.png",    # 倭瓜卡片图片路径
+                        "./data/image/PlantCard/Spikeweed.png",  # 地刺卡片图片路径
                         ],
     # 游戏相关设置
     "game": {
@@ -49,6 +50,7 @@ settings = {
             "cherry_bomb" : (0, 0),   # 樱桃炸弹在网格中的位置偏移
             "jalapeno" : (10, 0),      # 火爆辣椒在网格中的位置偏移
             "squash" : (-2, -100),        # 倭瓜在网格中的位置偏移
+            "spikeweed": (2, 60),    # 地刺在网格中的位置偏移
         },
         # 鼠标拖动植物时的位置偏移量
         "mousePlantPos":{
@@ -60,6 +62,7 @@ settings = {
             "cherry_bomb": (-35, -35), # 拖动樱桃炸弹时的位置偏移
             "jalapeno": (-25, -35),    # 拖动火爆辣椒时的位置偏移
             "squash": (-32, -150),      # 拖动倭瓜时的位置偏移
+            "spikeweed": (-32, -15),   # 拖动地刺时的位置偏移
         },
         # 植物动画帧切换的时间间隔
         "plantPreIndexTimeNumber":{
@@ -71,6 +74,7 @@ settings = {
             "cherry_bomb": 0.1,   # 樱桃炸弹动画帧切换时间间隔
             "jalapeno": 0.1,      # 火爆辣椒动画帧切换时间间隔
             "squash": 0.09,        # 倭瓜动画帧切换时间间隔
+            "spikeweed": 0.1,     # 地刺动画帧切换时间间隔
         },
         # 植物碰撞检测的 X 轴偏移量
         "detectionPlantXPos": {
@@ -83,6 +87,7 @@ settings = {
             "cherry_bomb": 0,     # 樱桃炸弹碰撞检测 X 轴偏移量
             "jalapeno": 0,         # 火爆辣椒碰撞检测 X 轴偏移量
             "squash": -70,           # 倭瓜碰撞检测 X 轴偏移量
+            "spikeweed": -10,      # 地刺碰撞检测 X 轴偏移量
         },
         # 游戏中会出现的僵尸类型集合
         "zombieType": {
@@ -242,6 +247,15 @@ settings = {
         "deleteTime": 60,  # 倭瓜删除时间
         "jumpXchange": 10,  # 倭瓜跳跃时X轴偏移量
     },
+    # 地刺相关属性设置
+    "spikeweed": {
+        "name": "spikeweed",  # 地刺名称
+        "gold": 100,           # 种植地刺所需金币数量
+        "size": (70, 30),  # 地刺显示尺寸
+        "path": "./data/image/Plant/Spikeweed/Spikeweed(%d).png",  # 地刺闲置状态图片路径
+        "imageCount": 10,  # 地刺闲置状态图片数量
+        "collisionSize": (70, 30),  # 地刺实际碰撞盒尺寸（扣除透明区域）
+    },
     # 普通僵尸相关属性设置
     "common_zombie": {
         "name": "zombie",  # 普通僵尸名称
@@ -258,6 +272,8 @@ settings = {
         "headlessImageCount": 18,  # 普通僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 普通僵尸死亡状态图片路径
         "deadImageCount": 10,  # 普通僵尸死亡状态图片数量
+        "spikeweed_eat_time": 120,  # 普通僵尸吃地刺的时间间隔（帧数）
+        "spikeweed_attack_power": 10,  # 普通僵尸吃地刺的伤害值
     },
     # 路障僵尸相关属性设置
     "conehead_zombie": {
@@ -275,6 +291,8 @@ settings = {
         "headlessImageCount": 18,  # 路障僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 路障僵尸死亡状态图片路径
         "deadImageCount": 10,  # 路障僵尸死亡状态图片数量
+        "spikeweed_eat_time": 120,  # 路障僵尸吃地刺的时间间隔（帧数）
+        "spikeweed_attack_power": 10,  # 路障僵尸吃地刺的伤害值
     },
     # 铁桶僵尸相关属性设置
     "buckethead_zombie": {
@@ -292,6 +310,8 @@ settings = {
         "headlessImageCount": 18,  # 铁桶僵尸无头状态图片数量
         "deadPath": "./data/image/Zombie/Zombie/die (%d).png",  # 铁桶僵尸死亡状态图片路径
         "deadImageCount": 10,  # 铁桶僵尸死亡状态图片数量
+        "spikeweed_eat_time": 120,  # 铁桶僵尸吃地刺的时间间隔（帧数）
+        "spikeweed_attack_power": 10,  # 铁桶僵尸吃地刺的伤害值
     },
     # 僵尸头部相关属性设置
     "zombie_head": {

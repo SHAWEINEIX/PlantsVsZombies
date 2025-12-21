@@ -247,6 +247,12 @@ class Game:
                 # 检查鼠标是否点击了卡片且卡片未被使用
                 if click(card.pos, card.size, pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     if not card.use:
+                        # 检查已选卡片数量是否超过最大选择数量
+                        if len(self.game.selectedCard) >= MAX_CHOOSE_CARD_NUMBER:
+                            # 提示用户已选满最大选择数量的卡片
+                            self.game.GameSetWindow.Error("错误", f"已选满{MAX_CHOOSE_CARD_NUMBER}卡片")
+                            break  # 跳出循环，不继续处理其他卡片
+
                         card.use = True  # 标记卡片为已使用
                         # 将选中的卡片添加到已选卡片列表
                         self.game.selectedCard.append(DisplayedSelectedCard(
@@ -407,6 +413,21 @@ class Game:
                     if collision_Plant_and_Zombie_detection(chomper, zombie, "chomper"):
                         chomper.ToEat(zombie) # 让食人花进入进食状态
                         break  # 跳出循环，避免重复处理
+        
+        # 处理地刺与僵尸的碰撞
+        for spikeweed in self.game.spikeweed_list:
+            for zombie in self.game.zombie_list:
+                # 检测地刺与僵尸是否发生碰撞
+                if collision_Plant_and_Zombie_detection(spikeweed, zombie, "spikeweed"):
+                    zombie.SpikeweedEatTime += 1
+                    if zombie.SpikeweedEatTime >= settings[zombie.type]["spikeweed_eat_time"]:
+                        zombie.SpikeweedEatTime = 0
+                        # 减少僵尸的生命值
+                        zombie.hp -= settings[zombie.type]["spikeweed_attack_power"]  
+                        if zombie.hp <= 0:
+                            self.game.zombie_list.remove(zombie)
+                elif not zombie.SpikeweedEatTime == 0:
+                    zombie.SpikeweedEatTime = 0
         
         # 处理食人花与僵尸的碰撞(僵尸咬食人花)
         for zombie in self.game.zombie_list:

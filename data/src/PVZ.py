@@ -167,6 +167,9 @@ class Pvz:
                         elif self.plantType == 8: #如果种植的是倭瓜
                             self.squash_list.append(Squash(self.ObjectGame, self.game.CheckAddPlant(pygame.mouse.get_pos(), self.plantType)['pos']))
                             self.plant = False
+                        elif self.plantType == 9: #如果种植的是地刺
+                            self.spikeweed_list.append(Spikeweed(self.ObjectGame, self.game.CheckAddPlant(pygame.mouse.get_pos(), self.plantType)['pos']))
+                            self.plant = False
                         self.game.gold -= settings[settings['plant_name'][self.plantType]]['gold'] # 扣除金币
 
                 for potatoMine in self.potatoMine_list:  # 遍历土豆地雷列表
@@ -210,6 +213,9 @@ class Pvz:
 
                 for jalapeno in self.jalapeno_list:  # 遍历火爆辣椒列表
                     jalapeno.run()  # 运行火爆辣椒
+
+                for spikeweed in self.spikeweed_list:  # 遍历地刺列表
+                    spikeweed.run()  # 运行地刺
                 
                 for growSoil in self.growSoil_list:  # 遍历生长土壤列表
                     growSoil.run()  # 运行生长土壤
@@ -282,6 +288,7 @@ class Pvz:
         self.card_shadow_list = []  # 卡片阴影列表
         self.zombiePos = [0, 0, 0, 0, 0, 0]  # 僵尸位置列表
         self.lawnmower_list = []  # 草地机列表
+        self.spikeweed_list = []  # 地刺列表
         self.lawnmowerIf = [0, 0, 0, 0, 0, 0]  # 草坪机是否已出现列表
     
     def SetWindowAtTheTop(self): # 设置窗口置顶
@@ -348,7 +355,15 @@ class Pvz:
 
         rankY = 1
         number = 1
-        for rankX in range(1, len(settings['plant_name'])):  # 遍历卡片列表
+        UpdateYflag = 0
+        for i in range(1, len(settings['plant_name'])):  # 遍历卡片列表
+            rankX = i % CHOOSE_CARD_FRAME_CARD_COUNT[0]
+            if rankX == 0:
+                rankX = CHOOSE_CARD_FRAME_CARD_COUNT[0]
+                UpdateYflag = 1
+            if UpdateYflag == 1 and rankX == 1:
+                UpdateYflag = 0
+                rankY += 1
             self.displayed_card.append(DisplayedCard(self.screen, 
                                                      settings['plant_name'][number],
                                                      (rankX, rankY)
